@@ -1,1 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio website for Alex Carter, showcasing projects, experience, and contact information." />
+  <title>Alex Carter | Portfolio</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #131a31;
+      --card: #1a2342;
+      --text: #e7ecff;
+      --muted: #b8c2f2;
+      --accent: #7c8cff;
+      --accent-2: #27d3b4;
+      --shadow: 0 15px 35px rgba(0,0,0,0.25);
+      --radius: 16px;
+      --max-width: 1100px;
+    }
 
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 90% -20%, #253469 0%, transparent 60%),
+                  radial-gradient(1000px 500px at -20% 20%, #1f5b6b 0%, transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(11,16,32,0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 0;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      font-size: 1.1rem;
+    }
+
+    .logo span { color: var(--accent-2); }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0.4rem 0.6rem;
+      border-radius: 999px;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: white;
+      background: rgba(124,140,255,0.22);
+    }
+
+    .hero {
+      padding: 5rem 0 4rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      margin: 0 0 0.75rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 60ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.78rem 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), #9ea9ff);
+      color: #0a1022;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.24);
+      color: var(--text);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .hero-card {
+      background: rgba(19,26,49,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 0.85rem;
+    }
+
+    .stat strong {
+      font-size: 1.1rem;
+      display: block;
+    }
+
+    section { padding: 2rem 0; }
+
+    h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.5rem, 2.3vw, 2rem);
+    }
+
+    .muted { color: var(--muted); }
+
+    .about {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+    }
+
+    .skills {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .chip {
+      background: rgba(124,140,255,0.16);
+      border: 1px solid rgba(124,140,255,0.45);
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .card h3 { margin-top: 0.2rem; }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card a {
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    form {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+
+    label { display: block; margin-bottom: 0.35rem; font-weight: 600; }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(7,11,22,0.75);
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+
+    input:focus, textarea:focus {
+      outline: 2px solid var(--accent);
+      border-color: transparent;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .contact,
+      .projects {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#home">Alex<span>Carter</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="container hero">
+      <div>
+        <h1>Designing and building digital products people actually enjoy using.</h1>
+        <p>
+          I'm a full-stack developer focused on performance, accessibility, and clean product experiences.
+          I help startups and teams turn rough ideas into launch-ready web apps.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">View My Work</a>
+          <a class="btn btn-secondary" href="#contact">Let’s Collaborate</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Highlights">
+        <h2 style="margin-top:0;">Quick Highlights</h2>
+        <p class="muted">Recent impact delivered across product, engineering, and growth.</p>
+        <div class="stat-grid">
+          <div class="stat"><strong>28+</strong> Projects shipped</div>
+          <div class="stat"><strong>99.9%</strong> Uptime on client apps</div>
+          <div class="stat"><strong>42%</strong> Avg speed improvement</div>
+          <div class="stat"><strong>6 yrs</strong> Professional experience</div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about" class="container">
+      <h2>About Me</h2>
+      <div class="about">
+        <p>
+          I specialize in JavaScript/TypeScript ecosystems, modern frontend frameworks,
+          API architecture, and cloud deployment. I enjoy turning complex problems into
+          intuitive interfaces and reliable backend systems.
+        </p>
+        <div class="skills" aria-label="Skills list">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">AWS</span>
+          <span class="chip">Docker</span>
+          <span class="chip">CI/CD</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="container">
+      <h2>Featured Projects</h2>
+      <div class="projects">
+        <article class="card">
+          <div>
+            <h3>Growth Analytics Dashboard</h3>
+            <p>Built a real-time SaaS dashboard with role-based access, custom charts, and event pipelines.</p>
+          </div>
+          <a href="#" aria-label="View Growth Analytics Dashboard project">View case study →</a>
+        </article>
+        <article class="card">
+          <div>
+            <h3>E-commerce Platform Revamp</h3>
+            <p>Redesigned checkout flow and improved Core Web Vitals, increasing conversion rates significantly.</p>
+          </div>
+          <a href="#" aria-label="View E-commerce Platform Revamp project">View case study →</a>
+        </article>
+        <article class="card">
+          <div>
+            <h3>Team Workflow Automation</h3>
+            <p>Automated repetitive operations using microservices and webhooks to cut manual work by 60%.</p>
+          </div>
+          <a href="#" aria-label="View Team Workflow Automation project">View case study →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="container">
+      <h2>Contact</h2>
+      <div class="contact">
+        <div class="about">
+          <p>
+            Looking for a developer to elevate your product? I’m available for freelance projects,
+            long-term contracts, and collaborative product builds.
+          </p>
+          <p><strong>Email:</strong> alex@example.com<br /><strong>Location:</strong> United States</p>
+        </div>
+        <form id="contact-form" novalidate>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+
+          <button class="btn btn-primary" type="submit">Send Message</button>
+          <p id="form-status" class="muted" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Alex Carter. Built with semantic HTML, modern CSS, and vanilla JS.</div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = [...document.querySelectorAll('main section')];
+    const year = document.getElementById('year');
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+
+    year.textContent = new Date().getFullYear();
+
+    const setActive = () => {
+      const y = window.scrollY + 120;
+      let current = sections[0].id;
+
+      for (const section of sections) {
+        if (y >= section.offsetTop) current = section.id;
+      }
+
+      navLinks.forEach(link => {
+        const active = link.getAttribute('href') === `#${current}`;
+        link.classList.toggle('active', active);
+      });
+    };
+
+    window.addEventListener('scroll', setActive, { passive: true });
+    setActive();
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        status.textContent = 'Please fill out all fields correctly.';
+        return;
+      }
+      status.textContent = 'Thanks! Your message has been recorded. Connect your backend endpoint to make this live.';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
